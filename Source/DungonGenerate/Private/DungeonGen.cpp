@@ -8,7 +8,7 @@
 // Written by: Hyunsoo Park								//
 // Edited by:											//
 // Generated Date: Mar 07, 2025							//
-// Modified Date:										//
+// Modified Date: Mar 10, 2025							//
 // ----------------------------------------------------	//
 
 // DEC : This is the actor class for the random map generation. 
@@ -25,8 +25,12 @@ void ADungeonGen::BeginPlay()
 	
 	Super::BeginPlay();
 	MaxRoomNumber = 15;
+	GetGridCoordinates(FVector2D((0, 0, 0)));
+	DrawDebugGrid();
 	PlacetheRoom();
 	GenerateRoom();
+
+	
 }
 
 // Sets default values
@@ -35,9 +39,9 @@ ADungeonGen::ADungeonGen()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	iMinRoomSize = 500;
-	iMaxRoomSize = 750;
-	iMazeSize = 2500;
+	iMinRoomSize = 250;
+	iMaxRoomSize = 700;
+	iMazeSize = 25000;
 
 }
 
@@ -53,8 +57,8 @@ void ADungeonGen::GetRandomRoom()
 	// Getter of the position 
 	const int32 RoomPosXMax = iMazeSize - FMath::TruncToInt(Size.X);
 	const int32 RoomPosYMax = iMazeSize - FMath::TruncToInt(Size.Y);
-	const int32 x = FMath::RandRange(0, 20000);
-	const int32 y = FMath::RandRange(0, 20000);
+	const int32 x = FMath::RandRange(0, iMazeSize);
+	const int32 y = FMath::RandRange(0, iMazeSize);
 	const FVector2D Pos (x,y);
 	// Getter 
 	RoomPosition = Pos;
@@ -63,20 +67,35 @@ void ADungeonGen::GetRandomRoom()
 
 void ADungeonGen::PlacetheRoom()
 {
-	
-	for (int32 i = 0 ; i < MaxRoomNumber; i++) // Starts from 1.
- 	{
-		GetRandomRoom();
+	int32 Attempts = 0;
+	const int32 MaxAttempts = MaxRoomNumber;
+
+	for (int32 i = 0; i < MaxRoomNumber; i++) // Starts from 1.
+	{
+		
+		do
+		{
+			GetRandomRoom();
+			Attempts++;
+			if (Attempts >= MaxAttempts)
+			{
+				UE_LOG(LogTemp, Error, TEXT("Exccessive attempt"));
+				continue;
+			}
+		}
+		while (isDuplicated(RoomPosition, RoomSize) && Attempts < MaxAttempts);
 		RoomSizes.Add(RoomSize);
 		RoomPositions.Add(RoomPosition);
-		UE_LOG(LogTemp, Log, TEXT("Room number %d : %s, %s "), i, *RoomSizes[i].ToString(), *RoomPositions[i].ToString());
-	
+
+		FIntPoint GridCoord = GetGridCoordinates(RoomPosition);
+		RoomGrid.FindOrAdd(GridCoord).Add(i);
+		UE_LOG(LogTemp, Log, TEXT("Room %d placed at %s"), i, *RoomPosition.ToString());
 	}
-	
 }
 
 void ADungeonGen::GenerateRoom()
 {
+	
 	UStaticMesh* DungeonRoom =LoadObject<UStaticMesh>(nullptr, TEXT("/Engine/BasicShapes/Cube.Cube"));
 	for (int32 i = 0 ; i < MaxRoomNumber; i++)
 	{
@@ -89,28 +108,71 @@ void ADungeonGen::GenerateRoom()
 		 	Transform.SetScale3D(FVector(RoomSizes[i].X * 0.1, RoomSizes[i].Y * 0.1 , 1.f));
 		 	Transform.SetLocation(FVector(RoomPositions[i].X, RoomPositions[i].Y, 50.f));
 		 	ActorRoom->SetActorTransform(Transform);
+		 	
+		 	
 		 }
 	}
 }
 
 // Need the duplication check function. 
-bool ADungeonGen::isDuplicated()
+bool ADungeonGen::isDuplicated(const FVector2D& NewPos, const FVector2D& NewSize)
 {
-	/*
-	for (int32 i = 0 ; i < MaxRoomNumber; i++)
+	if (RoomPositions.Num() == 0)
 	{
-		
-		// what is min x, min y? how I can pull max x, and max y? 
-		// save the x, y position and parameter to the array
-
-		// check first x,y position + parameter is inbtween of second parameter
-
-		// if those two are duplicated, return true,
-		return true; 
+		return false;
 	}
-	*/
-	// AABB Duplication check. 
-	return false; 
+	FIntPoint GridPos = GetGridCoordinates(NewPos);
+	for (int32 i = -1; i <= 1; i++)
+	{
+		for (int32 j = -1; j <= 1; j++)
+		{
+			FIntPoint NeighborPos = GridPos + FIntPoint(i, j);
+			if (!RoomGrid.Contains(NeighborPos)) continue;
+			if (RoomGrid.Contains(NeighborPos))
+			{
+				for (int32 RoomIndex : RoomGrid[NeighborPos])
+				{
+					FBox2D ExisitingRoomBox(
+						RoomPositions[RoomIndex] - RoomSizes[RoomIndex] * 0.5f,
+						RoomPositions[RoomIndex] + RoomSizes[RoomIndex] * 0.5f);
+					FBox2D NewRoomBox(NewPos - NewSize * 0.5f, NewPos + NewSize * 0.5f);
+
+					if (NewRoomBox.Intersect(ExisitingRoomBox))
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
+
+FIntPoint ADungeonGen::GetGridCoordinates(const FVector2D& position)
+{
+	return FIntPoint(FMath::FloorToInt(position.X/GridCellSize), (position.Y/GridCellSize)); 
+}
+
+void ADungeonGen::DrawDebugGrid()
+{
+	const int32 NumCellsX = iMazeSize / GridCellSize; // Total columns
+	const int32 NumCellsY = iMazeSize / GridCellSize; // Total rows
+
+	for (int32 x = 0; x <= NumCellsX; x++)
+	{
+		for (int32 y = 0; y <= NumCellsY; y++)
+		{
+			FVector Start(x * GridCellSize, y * GridCellSize, 10.0f);
+			FVector EndX((x + 1) * GridCellSize, y * GridCellSize, 10.0f);
+			FVector EndY(x * GridCellSize, (y + 1) * GridCellSize, 10.0f);
+
+			// Draw horizontal line
+			DrawDebugLine(GetWorld(), Start, EndX, FColor::Green, true, 10.0f, 0, 5.0f);
+
+			// Draw vertical line
+			DrawDebugLine(GetWorld(), Start, EndY, FColor::Green, true, 10.0f, 0, 5.0f);
+		}
+	}
 }
 
 

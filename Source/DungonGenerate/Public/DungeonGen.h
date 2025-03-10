@@ -7,7 +7,7 @@
 // Written by: Hyunsoo Park								//
 // Edited by:											//
 // Generated Date: Mar 07, 2025							//
-// Modified Date:										//
+// Modified Date: Mar 10, 2025							//
 // ----------------------------------------------------	//
 
 // DEC : This is the actor class for the random map generation. 
@@ -32,15 +32,19 @@ public:
 	void GetRandomRoom();
 	UFUNCTION(BlueprintCallable, Category = "DungeonGen")
 	void PlacetheRoom();
-	//UFUNCTION(BlueprintCallable, Category = "DungeonGen")
-	//bool isRoomOverlapped();
 	UFUNCTION(BlueprintCallable, Category = "DungeonGen")
 	void GenerateRoom();
+	
 
 protected:
 private:
 	UFUNCTION(BlueprintCallable, Category = "Vaildation")
-	bool isDuplicated();
+	bool isDuplicated(const FVector2D& NewPos, const FVector2D& NewSize);
+	UFUNCTION(BlueprintCallable, Category = "Grid")
+	FIntPoint GetGridCoordinates(const FVector2D& position);
+	UFUNCTION(BlueprintCallable, Category = "Grid")
+	void DrawDebugGrid();
+	
 	
 	
 public:
@@ -52,6 +56,9 @@ public:
 	int32 iMinRoomSize;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	int32 MaxRoomNumber;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	int32 GridCellSize = 4500;
+	TMap<FIntPoint, TArray<int32>> RoomGrid;
 	
 
 protected:
@@ -64,5 +71,8 @@ private:
 	TArray<FVector2D> RoomSizes;
 	UPROPERTY(EditAnywhere)
 	TArray<FVector2D> RoomPositions;
+	//UPROPERTY(EditAnywhere)
+	//TMap<FIntPoint> RoomGrid; 
+	
 	
 };
