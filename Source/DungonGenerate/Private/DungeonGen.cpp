@@ -35,9 +35,9 @@ ADungeonGen::ADungeonGen()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	iMinRoomSize = 100;
-	iMaxRoomSize = 500;
-	iMazeSize = 250000;
+	iMinRoomSize = 500;
+	iMaxRoomSize = 750;
+	iMazeSize = 2500;
 
 }
 
@@ -93,6 +93,26 @@ void ADungeonGen::GenerateRoom()
 	}
 }
 
-
 // Need the duplication check function. 
+bool ADungeonGen::isDuplicated()
+{
+	/*
+	for (int32 i = 0 ; i < MaxRoomNumber; i++)
+	{
+		
+		// what is min x, min y? how I can pull max x, and max y? 
+		// save the x, y position and parameter to the array
+
+		// check first x,y position + parameter is inbtween of second parameter
+
+		// if those two are duplicated, return true,
+		return true; 
+	}
+	*/
+	// AABB Duplication check. 
+	return false; 
+}
+
+
+
 

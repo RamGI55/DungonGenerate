@@ -39,6 +39,9 @@ public:
 
 protected:
 private:
+	UFUNCTION(BlueprintCallable, Category = "Vaildation")
+	bool isDuplicated();
+	
 	
 public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
@@ -50,8 +53,6 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	int32 MaxRoomNumber;
 	
-
-
 
 protected:
 private:
