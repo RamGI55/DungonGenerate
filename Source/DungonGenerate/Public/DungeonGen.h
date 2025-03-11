@@ -33,6 +33,7 @@ public:
 	void PlacetheRoom();
 	UFUNCTION(BlueprintCallable, Category = "DungeonGen")
 	void GenerateRoom();
+
 	
 
 protected:

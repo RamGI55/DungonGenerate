@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/ArrowComponent.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "MasterRoom.generated.h"
 
@@ -14,12 +16,37 @@ class DUNGONGENERATE_API AMasterRoom : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMasterRoom();
+	UFUNCTION(BlueprintCallable)
+	const UArrowComponent* GetRandDirection();
+	
 
 protected:
 
 
-public:	
-
+public:
+	// Static Mashes
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* Floormesh;
+	UPROPERTY(EditAnywhere)
+	UBoxComponent* CollisionBox;
+	// Master Direction Arrow indicates the North. 
+	UPROPERTY(EditAnywhere)
+	UArrowComponent* Arrow;
+	// Direction Arrows 
+	UPROPERTY(EditAnywhere)
+	UArrowComponent* NorthExit;
+	UPROPERTY(EditAnywhere)
+	UArrowComponent* SouthExit;
+	UPROPERTY(EditAnywhere)
+	UArrowComponent* WestExit;
+	UPROPERTY(EditAnywhere)
+	UArrowComponent* EastExit;
+	// Direction Arrow Array for the random generating direction. 
+	UPROPERTY(VisibleAnywhere)
+	TArray<UArrowComponent*> DirectionArrows;
+	UPROPERTY(VisibleAnywhere)
+	UArrowComponent* RandDirection; 
+	
 
 	
 	

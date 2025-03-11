@@ -2,10 +2,7 @@
 
 
 #include "DungeonMaker/MasterDungeon.h"
-
-
-
-
+#include "DungeonMaker/MasterRoom.h"
 
 // Sets default values
 AMasterDungeon::AMasterDungeon()
@@ -15,18 +12,41 @@ AMasterDungeon::AMasterDungeon()
 
 }
 
-// Called when the game starts or when spawned
-void AMasterDungeon::BeginPlay()
+TSubclassOf<class UObject> AMasterDungeon::GetBPDungeon()
 {
+	TObjectPtr<UBlueprint> SpnMasterDungeon = LoadObject<UBlueprint>(nullptr, TEXT ("/Script/Engine.Blueprint'/Game/DungeonMaker/MasterRoom.MasterRoom'"));
+	SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
+	return SpwnDungeon; 
+}
+
+void AMasterDungeon::GetTheInitialDungeon()
+{
+	Super::BeginPlay();
 	FActorSpawnParameters SpawnParameters;
 	FRotator Rot(0,0,0);
 	FVector Loc(0,0,0); 
-	Super::BeginPlay();
 
-	SpnMasterDungeon = LoadObject<UBlueprint>(nullptr, TEXT ("/Script/Engine.Blueprint'/Game/DungeonMaker/MasterRoom.MasterRoom'"));
-	TSubclassOf<class UObject> SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
+	GetBPDungeon(); 
+	//SpnMasterDungeon = LoadObject<UBlueprint>(nullptr, TEXT ("/Script/Engine.Blueprint'/Game/DungeonMaker/MasterRoom.MasterRoom'"));
+	//TSubclassOf<class UObject> SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
 	GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot); 
-	
+}
+
+void AMasterDungeon::GetNextRoom()
+{
+	MasterRoom->GetRandDirection();
+	TObjectPtr<UBlueprint> SpnDungeon;
+	GetBPDungeon();
+	FVector NewLoc = MasterRoom->GetRandDirection()->GetComponentLocation();
+	FRotator NewRot = MasterRoom->GetRandDirection()->GetComponentRotation(); 
+	GetWorld()->SpawnActor<AActor>(SpwnDungeon, NewLoc,
+								   NewRot);
+} 
+// Called when the game starts or when spawned
+void AMasterDungeon::BeginPlay()
+{
+	GetTheInitialDungeon();
+	GetNextRoom();
 }
 
 

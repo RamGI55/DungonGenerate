@@ -14,6 +14,12 @@ class DUNGONGENERATE_API AMasterDungeon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMasterDungeon();
+	UFUNCTION(BlueprintCallable)
+	TSubclassOf<class UObject> GetBPDungeon(); 
+	UFUNCTION(BlueprintCallable)
+	void GetTheInitialDungeon();
+	UFUNCTION(BlueprintCallable)
+	void GetNextRoom(); 
 	
 
 protected:
@@ -21,8 +27,13 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Spawning")
-	TObjectPtr<UBlueprint> SpnMasterDungeon;
+	UPROPERTY(VisibleAnywhere,Category="Room")
+	TSubclassOf<class UObject> SpwnDungeon; 
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Spawning")
+	//TObjectPtr<UBlueprint> SpnMasterDungeon;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "RoomList")
+	TArray<AActor*> RoomList; 
+	class AMasterRoom *MasterRoom; 
 	
 	
 	
