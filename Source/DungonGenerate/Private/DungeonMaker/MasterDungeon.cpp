@@ -3,8 +3,7 @@
 
 #include "DungeonMaker/MasterDungeon.h"
 
-
-
+#include "DungeonMaker/MasterRoom.h"
 
 
 // Sets default values
@@ -24,10 +23,10 @@ void AMasterDungeon::SpawnDungeon()
     
     SpnMasterDungeon = LoadObject<UBlueprint>(
     	nullptr, TEXT("/Script/Engine.Blueprint'/Game/DungeonMaker/BPMasterRoom.BPMasterRoom'"));
-    TSubclassOf<class UObject> SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
+    SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
     FActorSpawnParameters SpawnParams;
-    SpawnParams.Name = FName("MyDungeonActor");
-	GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot, SpawnParameters);
+	SpawnParams.Name = FName("MyDungeonActor");
+	FirstDungeon = GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot, SpawnParameters);
 }
 
 
@@ -35,7 +34,19 @@ void AMasterDungeon::SpawnDungeon()
 void AMasterDungeon::BeginPlay()
 {
 	Super::BeginPlay();
-	SpawnDungeon(); 
+	SpawnDungeon();
+	if (FirstDungeon)
+	{
+		AMasterRoom* FirstRoom = Cast<AMasterRoom>(FirstDungeon);
+		if (FirstRoom)
+		{
+			FRotator Rot(0, 0, 0);
+			FVector NextLoc = FirstRoom->GetRandDirection();
+			GetWorld()->SpawnActor<AActor>(SpwnDungeon, NextLoc, Rot);
+		}
+	}
+	
+	
 	
 }
 

@@ -20,7 +20,7 @@ public:
 	AMasterRoom();
 	
 	UFUNCTION (BlueprintCallable)
-	UArrowComponent* GetRandDirection(); 
+	FVector GetRandDirection(); 
 	virtual void BeginPlay() override; 
 protected:
 

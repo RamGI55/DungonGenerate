@@ -20,22 +20,22 @@ AMasterRoom::AMasterRoom()
 	NorthArrow->SetRelativeScale3D(FVector(1.f, 1.f, 1.f));
 
 	NorthExit = CreateDefaultSubobject<UArrowComponent>(TEXT("NorthExit"));
-	NorthExit->SetRelativeLocation(FVector(5.f, -950.f, 40.f));
+	NorthExit->SetRelativeLocation(FVector(14.6f, -950.f, 40.f));
 	NorthExit->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
 	NorthExit->ArrowColor = FColor::Green;
 
 	SouthExit = CreateDefaultSubobject<UArrowComponent>(TEXT("SouthExit"));
-	SouthExit->SetRelativeLocation(FVector(5.f, 950.f, 40.f));
+	SouthExit->SetRelativeLocation(FVector(14.6f, 950.f, 40.f));
 	SouthExit->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
 	SouthExit->ArrowColor = FColor::Green;
 
 	WestExit = CreateDefaultSubobject<UArrowComponent>(TEXT("WestExit"));
-	WestExit->SetRelativeLocation(FVector(-965.f, 0.f, 40.f));
+	WestExit->SetRelativeLocation(FVector(-950.5f, 0.f, 40.f));
 	WestExit->SetRelativeRotation(FRotator(0.f, 180.f, 0.f));
 	WestExit->ArrowColor = FColor::Green;
 
 	EastExit = CreateDefaultSubobject<UArrowComponent>(TEXT("EastExit"));
-	EastExit->SetRelativeLocation(FVector(955.f, 0.f, 40.f));
+	EastExit->SetRelativeLocation(FVector(969.5f, 0.f, 40.f));
 	EastExit->ArrowColor = FColor::Green;
 	
 	DirectionArrows.Add(NorthExit);
@@ -45,13 +45,13 @@ AMasterRoom::AMasterRoom()
 	
 }
 
- UArrowComponent* AMasterRoom::GetRandDirection()
+ FVector AMasterRoom::GetRandDirection()
 {
 	int32 i = FMath::RandRange( 0 , DirectionArrows.Num() -1 ); 
 
 	UE_LOG(LogTemp, Display, TEXT("RandDirection %d"), i);
 	RandDirection = DirectionArrows[i];
-	return RandDirection; 
+	return RandDirection->GetComponentLocation(); 
 	
 }
 

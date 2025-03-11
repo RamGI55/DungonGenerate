@@ -22,8 +22,11 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Spawning")
+	UPROPERTY(EditAnywhere, Category = "Spawning")
 	TObjectPtr<UBlueprint> SpnMasterDungeon;
-	
+	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
+	AActor* FirstDungeon; 
+	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
+	TSubclassOf<class UObject> SpwnDungeon; 
 	
 };
