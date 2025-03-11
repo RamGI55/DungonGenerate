@@ -1,25 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-// DESC:: Please tell me which features will be placed in the main dungeon. 
 
 #include "DungeonMaker/MasterRoom.h"
-
-#include "Kismet/KismetArrayLibrary.h"
 
 
 // Sets default values
 AMasterRoom::AMasterRoom()
 {
-	// generate the meshes at the very begining, those meshes must be editable in the blueprint.
-	// 모든 매쉬는 블루프린트에서 수정 가능함! 
-	Floormesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Floor"));
-	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision Box"));
-	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("DirectionArrow"));
-	NorthExit = CreateDefaultSubobject<UArrowComponent>(TEXT("NorthExit"));
-	SouthExit = CreateDefaultSubobject<UArrowComponent>(TEXT("SouthExit"));
-	WestExit = CreateDefaultSubobject<UArrowComponent>(TEXT("WestExit"));
-	EastExit = CreateDefaultSubobject<UArrowComponent>(TEXT("EastExit"));
+	
 
+<<<<<<< HEAD
 	// Direction Arrow 배열 정리. 
 	DirectionArrows.Add(NorthExit);
 	DirectionArrows.Add(SouthExit);
@@ -73,9 +63,9 @@ void AMasterRoom::GenerateRoom()
 	{
 		UE_LOG(LogTemp, Error, TEXT("SpwnDungeon is not valid"));
 	}
+=======
+>>>>>>> parent of 32952e2 (Random Genertation)
 }
-
-
 
 
 

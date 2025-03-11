@@ -15,12 +15,15 @@ class DUNGONGENERATE_API AMasterDungeon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMasterDungeon();
+<<<<<<< HEAD
 	UFUNCTION(BlueprintCallable)
 	AActor* GetMasterDungeon(); 
 	UFUNCTION(BlueprintCallable)
 	void GetTheInitialDungeon();
 	UFUNCTION(BlueprintCallable)
 	void GetNextRoom(); 
+=======
+>>>>>>> parent of 32952e2 (Random Genertation)
 	
 
 protected:
@@ -28,12 +31,18 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+<<<<<<< HEAD
 	UPROPERTY(VisibleAnywhere)
 	class AMasterRoom* MasterRoom;  
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Spawning")
 	//TObjectPtr<UBlueprint> SpnMasterDungeon;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "RoomList")
 	TArray<AActor*> RoomList; 
+=======
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Spawning")
+	TObjectPtr<UBlueprint> SpnMasterDungeon;
+	
+>>>>>>> parent of 32952e2 (Random Genertation)
 	
 private:
 	FTimerHandle TimerHandle; 

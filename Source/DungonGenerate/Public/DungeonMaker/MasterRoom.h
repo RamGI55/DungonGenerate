@@ -3,8 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ArrowComponent.h"
-#include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "MasterRoom.generated.h"
 
@@ -16,16 +14,20 @@ class DUNGONGENERATE_API AMasterRoom : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMasterRoom();
+<<<<<<< HEAD
 	UFUNCTION(BlueprintCallable)
 	const UArrowComponent* GetRandDirection();
 	UFUNCTION(BlueprintCallable)
 	void GenerateRoom();
 	virtual void BeginPlay() override; 
 	
+=======
+>>>>>>> parent of 32952e2 (Random Genertation)
 
 protected:
 
 
+<<<<<<< HEAD
 public:
 	// Static Mashes
 	UPROPERTY(VisibleAnywhere,Category="SpawnBP")
@@ -51,6 +53,11 @@ public:
 	TArray<UArrowComponent*> DirectionArrows;
 	UPROPERTY(VisibleAnywhere)
 	UArrowComponent* RandDirection; 
+=======
+public:	
+
+
+>>>>>>> parent of 32952e2 (Random Genertation)
 	
 	
 };

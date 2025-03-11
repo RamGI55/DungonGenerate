@@ -2,7 +2,10 @@
 
 
 #include "DungeonMaker/MasterDungeon.h"
-#include "DungeonMaker/MasterRoom.h"
+
+
+
+
 
 // Sets default values
 AMasterDungeon::AMasterDungeon()
@@ -12,6 +15,7 @@ AMasterDungeon::AMasterDungeon()
 
 }
 
+<<<<<<< HEAD
 AActor* AMasterDungeon::GetMasterDungeon()
 {
 	return MasterRoom; 
@@ -43,6 +47,20 @@ void AMasterDungeon::BeginPlay()
 {	
 	GetTheInitialDungeon();
 
+=======
+// Called when the game starts or when spawned
+void AMasterDungeon::BeginPlay()
+{
+	FActorSpawnParameters SpawnParameters;
+	FRotator Rot(0,0,0);
+	FVector Loc(0,0,0); 
+	Super::BeginPlay();
+
+	SpnMasterDungeon = LoadObject<UBlueprint>(nullptr, TEXT ("/Script/Engine.Blueprint'/Game/DungeonMaker/MasterRoom.MasterRoom'"));
+	TSubclassOf<class UObject> SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
+	GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot); 
+	
+>>>>>>> parent of 32952e2 (Random Genertation)
 }
 
 
