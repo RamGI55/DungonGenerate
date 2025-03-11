@@ -25,5 +25,4 @@ public:
 	TObjectPtr<UBlueprint> SpnMasterDungeon;
 	
 	
-	
 };

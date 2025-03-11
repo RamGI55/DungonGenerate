@@ -23,7 +23,7 @@ void AMasterDungeon::BeginPlay()
 	FVector Loc(0,0,0); 
 	Super::BeginPlay();
 
-	SpnMasterDungeon = LoadObject<UBlueprint>(nullptr, TEXT ("/Script/Engine.Blueprint'/Game/DungeonMaker/MasterRoom.MasterRoom'"));
+	SpnMasterDungeon = LoadObject<UBlueprint>(nullptr, TEXT ("/Script/Engine.Blueprint'/Game/DungeonMaker/BPMasterRoom.BPMasterRoom'"));
 	TSubclassOf<class UObject> SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
 	GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot); 
 	
