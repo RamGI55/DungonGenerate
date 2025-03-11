@@ -14,7 +14,8 @@ class DUNGONGENERATE_API AMasterDungeon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMasterDungeon();
-	
+	UFUNCTION(BlueprintCallable)
+	void SpawnDungeon(); 
 
 protected:
 	// Called when the game starts or when spawned

@@ -50,13 +50,15 @@ AMasterRoom::AMasterRoom()
 	int32 i = FMath::RandRange( 0 , DirectionArrows.Num() -1 ); 
 
 	UE_LOG(LogTemp, Display, TEXT("RandDirection %d"), i);
-	return DirectionArrows[i];
+	RandDirection = DirectionArrows[i];
+	return RandDirection; 
 	
 }
 
 void AMasterRoom::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 
