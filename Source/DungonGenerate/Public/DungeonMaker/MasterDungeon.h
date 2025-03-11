@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "MasterRoom.h"
 #include "GameFramework/Actor.h"
 #include "MasterDungeon.generated.h"
 
@@ -15,7 +16,7 @@ public:
 	// Sets default values for this actor's properties
 	AMasterDungeon();
 	UFUNCTION(BlueprintCallable)
-	TSubclassOf<class UObject> GetBPDungeon(); 
+	AActor* GetMasterDungeon(); 
 	UFUNCTION(BlueprintCallable)
 	void GetTheInitialDungeon();
 	UFUNCTION(BlueprintCallable)
@@ -27,14 +28,14 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	UPROPERTY(VisibleAnywhere,Category="Room")
-	TSubclassOf<class UObject> SpwnDungeon; 
+	UPROPERTY(VisibleAnywhere)
+	class AMasterRoom* MasterRoom;  
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Spawning")
 	//TObjectPtr<UBlueprint> SpnMasterDungeon;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "RoomList")
 	TArray<AActor*> RoomList; 
-	class AMasterRoom *MasterRoom; 
 	
-	
+private:
+	FTimerHandle TimerHandle; 
 	
 };

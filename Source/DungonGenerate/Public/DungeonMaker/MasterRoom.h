@@ -18,6 +18,9 @@ public:
 	AMasterRoom();
 	UFUNCTION(BlueprintCallable)
 	const UArrowComponent* GetRandDirection();
+	UFUNCTION(BlueprintCallable)
+	void GenerateRoom();
+	virtual void BeginPlay() override; 
 	
 
 protected:
@@ -25,6 +28,8 @@ protected:
 
 public:
 	// Static Mashes
+	UPROPERTY(VisibleAnywhere,Category="SpawnBP")
+	TSubclassOf<class UObject> SpwnDungeon;
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Floormesh;
 	UPROPERTY(EditAnywhere)
@@ -46,8 +51,6 @@ public:
 	TArray<UArrowComponent*> DirectionArrows;
 	UPROPERTY(VisibleAnywhere)
 	UArrowComponent* RandDirection; 
-	
-
 	
 	
 };

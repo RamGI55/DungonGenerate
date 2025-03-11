@@ -34,8 +34,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "DungeonGen")
 	void GenerateRoom();
 
-	
-
 protected:
 private:
 	UFUNCTION(BlueprintCallable, Category = "Vaildation")
