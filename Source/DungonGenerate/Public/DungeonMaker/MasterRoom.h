@@ -25,6 +25,8 @@ public:
 	FVector GetRandDirection(); 
 	virtual void BeginPlay() override;
 	UFUNCTION(BlueprintCallable)
+	bool IsDirectionDuplicated(const FVector& Direction);
+	UFUNCTION(BlueprintCallable)
 	const bool SphereTracing(); 
 protected:
 

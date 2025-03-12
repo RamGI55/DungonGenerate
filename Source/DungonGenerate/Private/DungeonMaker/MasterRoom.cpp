@@ -45,45 +45,105 @@ AMasterRoom::AMasterRoom()
 	
 }
 
- FVector AMasterRoom::GetRandDirection()
+FVector AMasterRoom::GetRandDirection()
 {
-	int32 i = FMath::RandRange( 0 , DirectionArrows.Num() -1 ); 
+    // Check for duplicated directions and remove them from the array
+    TArray<UArrowComponent*> ValidDirections;
+    for (UArrowComponent* Arrow : DirectionArrows)
+    {
+        if (!IsDirectionDuplicated(Arrow->GetComponentLocation()))
+        {
+            ValidDirections.Add(Arrow);
+        }
+    }
 
-	UE_LOG(LogTemp, Display, TEXT("RandDirection %d"), i);
-	RandDirection = DirectionArrows[i];
-	return RandDirection->GetComponentLocation(); 
-	
+    if (ValidDirections.Num() == 0)
+    {
+        UE_LOG(LogTemp, Error, TEXT("All directions are duplicated. Cannot place new dungeon."));
+        return FVector::ZeroVector; // Return an invalid vector
+    }
+
+    int32 i = FMath::RandRange(0, ValidDirections.Num() - 1);
+
+    UE_LOG(LogTemp, Display, TEXT("RandDirection %d"), i);
+    RandDirection = ValidDirections[i];
+    return RandDirection->GetComponentLocation();
 }
 
 void AMasterRoom::BeginPlay()
 {
-	Super::BeginPlay();
-	SphereTracing(); 
-	
+    Super::BeginPlay();
+    SphereTracing(); 
+}
+
+bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction)
+{
+    const FVector Start = this->GetActorLocation();
+    const FVector End = Start + Direction;
+    TArray<AActor*> ActorsIgnore;
+    ActorsIgnore.Add(this);
+    FHitResult HitResult;
+
+    const bool Hit = UKismetSystemLibrary::SphereTraceSingle(
+        GetWorld(),
+        Start,
+        End,
+        50.0f, // Trace radius
+        ETraceTypeQuery::TraceTypeQuery1,
+        false,
+        ActorsIgnore,
+        EDrawDebugTrace::ForDuration,
+        HitResult,
+        true,
+        FLinearColor::Blue,
+        FLinearColor::Red,
+        5.0f // Duration of the debug line
+    );
+
+    if (Hit)
+    {
+        AActor* HitActor = HitResult.GetActor();
+        if (HitActor && HitActor->IsA(AMasterRoom::StaticClass()))
+        {
+            return true; // Direction is duplicated
+        }
+    }
+
+    return false; // Direction is not duplicated
 }
 
 const bool AMasterRoom::SphereTracing()
 {
-	TArray<AActor*> ActorsIgnore;
-	ActorsIgnore.Add(GetOwner());
-	TArray<AActor*> HitArray;
-	FHitResult HitResult;
-	// add subclass dungeon
-	for (UArrowComponent* Arrow : DirectionArrows)
-	{
-		const FVector Start = Arrow->GetComponentLocation();
-		const FVector End = Arrow->GetComponentLocation();
-		const bool Hit = UKismetSystemLibrary::SphereTraceSingle(GetWorld(), Start, End, Traceradius,
-		                                                         ETraceTypeQuery::TraceTypeQuery1
-		                                                         , false, ActorsIgnore, EDrawDebugTrace::Persistent,
-		                                                         HitResult
-		                                                         , true, FLinearColor::Blue, FLinearColor::Red, 50.0f);
-		if (Hit)
-		{
-			return true;
-		}
-	}
-	return false;
+    TArray<AActor*> ActorsIgnore;
+    ActorsIgnore.Add(this);
+    FHitResult HitResult;
+
+    for (UArrowComponent* Arrow : DirectionArrows)
+    {
+        const FVector Start = this->GetActorLocation();
+        const FVector End = Arrow->GetComponentLocation();
+        const bool Hit = UKismetSystemLibrary::SphereTraceSingle(
+            GetWorld(),
+            Start,
+            End,
+            50.0f, // Trace radius
+            ETraceTypeQuery::TraceTypeQuery1,
+            false,
+            ActorsIgnore,
+            EDrawDebugTrace::Persistent,
+            HitResult,
+            true,
+            FLinearColor::Blue,
+            FLinearColor::Red,
+            5.0f // Duration of the debug line
+        );
+
+        if (Hit)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 
