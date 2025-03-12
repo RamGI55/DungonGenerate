@@ -11,11 +11,11 @@ AMasterDungeon::AMasterDungeon()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	DungeonNumber = 10; 
 }
 
 void AMasterDungeon::SpawnDungeon()
-{
+{ 
 	FActorSpawnParameters SpawnParameters;
     FRotator Rot(0, 0, 0);
     FVector Loc(0, 0, 0);
@@ -26,7 +26,7 @@ void AMasterDungeon::SpawnDungeon()
     SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
     FActorSpawnParameters SpawnParams;
 	SpawnParams.Name = FName("MyDungeonActor");
-	FirstDungeon = GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot, SpawnParameters);
+	CurrentDungeon = GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot, SpawnParameters);
 }
 
 
@@ -35,17 +35,23 @@ void AMasterDungeon::BeginPlay()
 {
 	Super::BeginPlay();
 	SpawnDungeon();
-	if (FirstDungeon)
-	{
-		AMasterRoom* FirstRoom = Cast<AMasterRoom>(FirstDungeon);
-		if (FirstRoom)
-		{
-			FRotator Rot(0, 0, 0);
-			FVector NextLoc = FirstRoom->GetRandDirection();
-			GetWorld()->SpawnActor<AActor>(SpwnDungeon, NextLoc, Rot);
+	for (int i = 0; i < DungeonNumber; i++)
+	{ 
+		if (CurrentDungeon)
+		{	
+			AMasterRoom* FirstRoom = Cast<AMasterRoom>(CurrentDungeon);
+			if (FirstRoom)
+			{
+				FRotator Rot(0, 0, 0);
+				FVector NextLoc = FirstRoom->GetRandDirection();
+				AActor* NewDungeon = GetWorld()->SpawnActor<AActor>(SpwnDungeon, NextLoc, Rot); // Must another TsubClass which has been newly generated. 
+				if (NewDungeon)
+				{
+					CurrentDungeon = NewDungeon;
+				}
+			}
 		}
-	}
-	
+	} 
 	
 	
 
