@@ -3,8 +3,7 @@
 
 #include "DungeonMaker/MasterDungeon.h"
 
-
-
+#include "DungeonMaker/MasterRoom.h"
 
 
 // Sets default values
@@ -15,52 +14,43 @@ AMasterDungeon::AMasterDungeon()
 
 }
 
-<<<<<<< HEAD
-AActor* AMasterDungeon::GetMasterDungeon()
-{
-	return MasterRoom; 
-}
-
-void AMasterDungeon::GetTheInitialDungeon()
+void AMasterDungeon::SpawnDungeon()
 {
 	FActorSpawnParameters SpawnParameters;
-	FRotator Rot(0, 0, 0);
-	FVector Loc(0, 0, 0);
-	MasterRoom = GetWorld()->SpawnActor<AMasterRoom>(AMasterRoom::StaticClass(), Loc, Rot, SpawnParameters); 
-	if (MasterRoom)
-	{
-		MasterRoom->GenerateRoom(); 
-	}
+    FRotator Rot(0, 0, 0);
+    FVector Loc(0, 0, 0);
+    
+    
+    SpnMasterDungeon = LoadObject<UBlueprint>(
+    	nullptr, TEXT("/Script/Engine.Blueprint'/Game/DungeonMaker/BPMasterRoom.BPMasterRoom'"));
+    SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
+    FActorSpawnParameters SpawnParams;
+	SpawnParams.Name = FName("MyDungeonActor");
+	FirstDungeon = GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot, SpawnParameters);
 }
 
-void AMasterDungeon::GetNextRoom()
-{
-	MasterRoom->GetRandDirection();
-	TObjectPtr<UBlueprint> SpnDungeon;
-	GetMasterDungeon();
-	FVector NewLoc = MasterRoom->GetRandDirection()->GetComponentLocation();
-	FRotator NewRot = MasterRoom->GetRandDirection()->GetComponentRotation(); 
 
-} 
-// Called when the game starts or when spawned
-void AMasterDungeon::BeginPlay()
-{	
-	GetTheInitialDungeon();
-
-=======
 // Called when the game starts or when spawned
 void AMasterDungeon::BeginPlay()
 {
-	FActorSpawnParameters SpawnParameters;
-	FRotator Rot(0,0,0);
-	FVector Loc(0,0,0); 
 	Super::BeginPlay();
-
-	SpnMasterDungeon = LoadObject<UBlueprint>(nullptr, TEXT ("/Script/Engine.Blueprint'/Game/DungeonMaker/MasterRoom.MasterRoom'"));
-	TSubclassOf<class UObject> SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
-	GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot); 
+	SpawnDungeon();
+	if (FirstDungeon)
+	{
+		AMasterRoom* FirstRoom = Cast<AMasterRoom>(FirstDungeon);
+		if (FirstRoom)
+		{
+			FRotator Rot(0, 0, 0);
+			FVector NextLoc = FirstRoom->GetRandDirection();
+			GetWorld()->SpawnActor<AActor>(SpwnDungeon, NextLoc, Rot);
+		}
+	}
+	
+	
 	
 >>>>>>> parent of 32952e2 (Random Genertation)
 }
+
+
 
 

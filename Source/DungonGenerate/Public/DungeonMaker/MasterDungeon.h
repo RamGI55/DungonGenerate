@@ -15,36 +15,19 @@ class DUNGONGENERATE_API AMasterDungeon : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AMasterDungeon();
-<<<<<<< HEAD
 	UFUNCTION(BlueprintCallable)
-	AActor* GetMasterDungeon(); 
-	UFUNCTION(BlueprintCallable)
-	void GetTheInitialDungeon();
-	UFUNCTION(BlueprintCallable)
-	void GetNextRoom(); 
-=======
->>>>>>> parent of 32952e2 (Random Genertation)
-	
+	void SpawnDungeon(); 
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-<<<<<<< HEAD
-	UPROPERTY(VisibleAnywhere)
-	class AMasterRoom* MasterRoom;  
-	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Spawning")
-	//TObjectPtr<UBlueprint> SpnMasterDungeon;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "RoomList")
-	TArray<AActor*> RoomList; 
-=======
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Spawning")
+	UPROPERTY(EditAnywhere, Category = "Spawning")
 	TObjectPtr<UBlueprint> SpnMasterDungeon;
-	
->>>>>>> parent of 32952e2 (Random Genertation)
-	
-private:
-	FTimerHandle TimerHandle; 
+	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
+	AActor* FirstDungeon; 
+	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
+	TSubclassOf<class UObject> SpwnDungeon; 
 	
 };
