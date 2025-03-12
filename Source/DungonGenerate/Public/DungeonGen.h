@@ -33,10 +33,7 @@ public:
 	void PlacetheRoom();
 	UFUNCTION(BlueprintCallable, Category = "DungeonGen")
 	void GenerateRoom();
-<<<<<<< HEAD
-=======
-	
->>>>>>> parent of 32952e2 (Random Genertation)
+
 
 protected:
 private:

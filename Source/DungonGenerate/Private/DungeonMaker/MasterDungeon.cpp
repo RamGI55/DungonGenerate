@@ -48,7 +48,7 @@ void AMasterDungeon::BeginPlay()
 	
 	
 	
->>>>>>> parent of 32952e2 (Random Genertation)
+
 }
 
 
