@@ -26,12 +26,12 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Spawning")
 	TObjectPtr<UBlueprint> SpnMasterDungeon;
 	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
-	AActor* CurrentDungeon;
+	AActor* FirstDungeon;
 	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
 	AActor* PreviousDungeon;
 	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
 	TSubclassOf<class UObject> SpwnDungeon;
-	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
+	UPROPERTY(EditAnywhere, Category = "Dungeon")
 	int32 DungeonNumber; 
 	
 };

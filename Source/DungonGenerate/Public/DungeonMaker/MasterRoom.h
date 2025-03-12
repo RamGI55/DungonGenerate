@@ -6,7 +6,9 @@
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "MasterRoom.generated.h"
+
 
 
 
@@ -21,7 +23,9 @@ public:
 	
 	UFUNCTION (BlueprintCallable)
 	FVector GetRandDirection(); 
-	virtual void BeginPlay() override; 
+	virtual void BeginPlay() override;
+	UFUNCTION(BlueprintCallable)
+	const bool SphereTracing(); 
 protected:
 
 
@@ -47,6 +51,10 @@ public:
 	UArrowComponent* EastExit;
 	
 	// Walls
+
+	// Collision Sphere for overlap check
+	UPROPERTY(VisibleAnywhere, Category = "Trace")
+	float Traceradius = 100.f;	
 	
 	// Direction Arrow Array for the random generating direction. 
 	UPROPERTY(VisibleAnywhere)
