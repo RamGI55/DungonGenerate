@@ -51,10 +51,12 @@ public:
 	UArrowComponent* EastExit;
 	
 	// Walls
-
+	
 	// Collision Sphere for overlap check
 	UPROPERTY(VisibleAnywhere, Category = "Trace")
-	float Traceradius = 100.f;	
+	float Traceradius = 100.f;
+	UPROPERTY(VisibleAnywhere, Category = "Trace")
+	int32 HitCount; 
 	
 	// Direction Arrow Array for the random generating direction. 
 	UPROPERTY(VisibleAnywhere)

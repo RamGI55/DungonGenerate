@@ -32,6 +32,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
 	TSubclassOf<class UObject> SpwnDungeon;
 	UPROPERTY(EditAnywhere, Category = "Dungeon")
-	int32 DungeonNumber; 
+	int32 DungeonNumber;
+	
 	
 };

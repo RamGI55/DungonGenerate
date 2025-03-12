@@ -64,30 +64,26 @@ void AMasterRoom::BeginPlay()
 
 const bool AMasterRoom::SphereTracing()
 {
-	
-	
-	
-	TArray<AActor*>ActorsIgnore;
+	TArray<AActor*> ActorsIgnore;
 	ActorsIgnore.Add(GetOwner());
-	TArray<AActor*>HitArray;
+	TArray<AActor*> HitArray;
 	FHitResult HitResult;
 	// add subclass dungeon
-	for (UArrowComponent* Arrow :DirectionArrows)
+	for (UArrowComponent* Arrow : DirectionArrows)
 	{
-		const FVector Start = Arrow -> GetComponentLocation(); 
-		const FVector End = Arrow -> GetComponentLocation(); 
-		const bool Hit = UKismetSystemLibrary::SphereTraceSingle(GetWorld(), Start, End, Traceradius, ETraceTypeQuery::TraceTypeQuery1 
-											, false, ActorsIgnore,EDrawDebugTrace::Persistent, HitResult 
-											, true,FLinearColor::Blue, FLinearColor::Red, 50.0f); 
-	
-	
+		const FVector Start = Arrow->GetComponentLocation();
+		const FVector End = Arrow->GetComponentLocation();
+		const bool Hit = UKismetSystemLibrary::SphereTraceSingle(GetWorld(), Start, End, Traceradius,
+		                                                         ETraceTypeQuery::TraceTypeQuery1
+		                                                         , false, ActorsIgnore, EDrawDebugTrace::Persistent,
+		                                                         HitResult
+		                                                         , true, FLinearColor::Blue, FLinearColor::Red, 50.0f);
 		if (Hit)
 		{
-			return true; 
+			return true;
 		}
 	}
-	return false; 
-	
+	return false;
 }
 
 
