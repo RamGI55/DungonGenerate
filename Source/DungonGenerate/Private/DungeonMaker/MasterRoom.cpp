@@ -8,34 +8,34 @@
 AMasterRoom::AMasterRoom()
 {
 	Floormesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Floormesh"));
-	Floormesh->SetRelativeLocation(FVector(0, 0, 40.f));
-	Floormesh->SetRelativeScale3D(FVector(19.2f, 19.2f, 0.5f));
+	Floormesh->SetRelativeLocation(FVector(0, 0, 0.f));
+	Floormesh->SetRelativeScale3D(FVector(25.f, 25.f, 0.1f));
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
-	CollisionBox->SetRelativeLocation(FVector(0, 0, 40.f));
-	CollisionBox->SetRelativeScale3D(FVector(30.f, 30.f, 1.f));
+	CollisionBox->SetRelativeLocation(FVector(0, 0, 0.f));
+	CollisionBox->SetRelativeScale3D(FVector(25.f, 25.f, 1.f));
 
 	NorthArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("NorthArrow"));
 	NorthArrow->SetRelativeLocation(FVector(35.f, 35.f, 120.f));
 	NorthArrow->SetRelativeScale3D(FVector(1.f, 1.f, 1.f));
 
 	NorthExit = CreateDefaultSubobject<UArrowComponent>(TEXT("NorthExit"));
-	NorthExit->SetRelativeLocation(FVector(14.6f, -950.f, 40.f));
+	NorthExit->SetRelativeLocation(FVector(0.f, -3450.f, 0.f));
 	NorthExit->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
 	NorthExit->ArrowColor = FColor::Green;
 
 	SouthExit = CreateDefaultSubobject<UArrowComponent>(TEXT("SouthExit"));
-	SouthExit->SetRelativeLocation(FVector(14.6f, 950.f, 40.f));
-	SouthExit->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
+	SouthExit->SetRelativeLocation(FVector(0.f, 3450.f, 0.f));
+	SouthExit->SetRelativeRotation(FRotator(0.f, 90.f, 0.f));
 	SouthExit->ArrowColor = FColor::Green;
 
 	WestExit = CreateDefaultSubobject<UArrowComponent>(TEXT("WestExit"));
-	WestExit->SetRelativeLocation(FVector(-950.5f, 0.f, 40.f));
+	WestExit->SetRelativeLocation(FVector(-3450.f, 0.f, 0.f));
 	WestExit->SetRelativeRotation(FRotator(0.f, 180.f, 0.f));
 	WestExit->ArrowColor = FColor::Green;
 
 	EastExit = CreateDefaultSubobject<UArrowComponent>(TEXT("EastExit"));
-	EastExit->SetRelativeLocation(FVector(969.5f, 0.f, 40.f));
+	EastExit->SetRelativeLocation(FVector(3450.f, 0.f, 0.f));
 	EastExit->ArrowColor = FColor::Green;
 	
 	DirectionArrows.Add(NorthExit);

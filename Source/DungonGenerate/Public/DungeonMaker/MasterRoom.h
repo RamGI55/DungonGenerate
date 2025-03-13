@@ -53,7 +53,14 @@ public:
 	UArrowComponent* EastExit;
 	
 	// Walls
-	
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* NorthWall;
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* SouthWall;
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* WestWall;
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* EastWall;
 	// Collision Sphere for overlap check
 	UPROPERTY(VisibleAnywhere, Category = "Trace")
 	float Traceradius = 100.f;
@@ -61,9 +68,9 @@ public:
 	int32 HitCount; 
 	
 	// Direction Arrow Array for the random generating direction. 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Arrows")
 	TArray<UArrowComponent*> DirectionArrows;
 	UPROPERTY(VisibleAnywhere)
-	UArrowComponent* RandDirection; 
+	UArrowComponent* RandDirection;
 	
 };
