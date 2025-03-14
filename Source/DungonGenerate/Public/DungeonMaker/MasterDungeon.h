@@ -17,11 +17,16 @@ public:
 	// Sets default values for this actor's properties
 	AMasterDungeon();
 	UFUNCTION(BlueprintCallable)
-	void SpawnDungeon(); 
-
+	void SpawnDungeon();
+	
+private:
+	UFUNCTION()
+	void DeleteDungeon(); 
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	AMasterRoom* MasterRoom; 
 
 public:
 	UPROPERTY(EditAnywhere, Category = "Spawning")
@@ -34,5 +39,7 @@ public:
 	TSubclassOf<class UObject> SpwnDungeon;
 	UPROPERTY(EditAnywhere, Category = "Dungeon")
 	int32 DungeonNumber;
+	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
+	int32 GenerateCounter; 
 	
 };

@@ -4,6 +4,7 @@
 #include "DungeonMaker/MasterRoom.h"
 
 #include "DungeonMaker/DungeonEventComponent.h"
+#include "DungeonMaker/MasterDungeon.h"
 
 
 // Sets default values
@@ -63,8 +64,8 @@ FVector AMasterRoom::GetRandDirection()
 
     if (ValidDirections.Num() == 0)
     {
-        UE_LOG(LogTemp, Error, TEXT("All directions are duplicated. Cannot place new dungeon."));
-        return FVector::ZeroVector; // Return an invalid vector
+        UE_LOG(LogTemp, Error, TEXT("All directions are duplicated. Cannot place new dungeon."))
+    	return FVector::ZeroVector; // Return an invalid vector
     }
 
     int32 i = FMath::RandRange(0, ValidDirections.Num() - 1);
@@ -98,7 +99,7 @@ bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction)
         UEngineTypes::ConvertToTraceType(ECC_EngineTraceChannel1),
         false,
         ActorsIgnore,
-        EDrawDebugTrace::ForDuration,
+        EDrawDebugTrace::Persistent,
         HitResult,
         true,
         FLinearColor::Blue,
@@ -139,7 +140,7 @@ const bool AMasterRoom::SphereTracing()
             ETraceTypeQuery::TraceTypeQuery1,
             false,
             ActorsIgnore,
-            EDrawDebugTrace::Persistent,
+            EDrawDebugTrace::None,
             HitResult,
             true,
             FLinearColor::Blue,

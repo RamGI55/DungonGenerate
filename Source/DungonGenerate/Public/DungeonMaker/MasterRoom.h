@@ -10,7 +10,7 @@
 #include "MasterRoom.generated.h"
 
 
-
+class AMasterDungeon;
 
 UCLASS()
 class DUNGONGENERATE_API AMasterRoom : public AActor
@@ -29,10 +29,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	const bool SphereTracing();
 	UFUNCTION(BlueprintCallable)
-	void ActivateEvent(); 
+	void ActivateEvent();
+	AMasterDungeon* DungeonGenerator;
+
+	
 protected:
-
-
+	
 public:	
 	// Static Mashes
 	UPROPERTY(VisibleAnywhere,Category="SpawnBP")
