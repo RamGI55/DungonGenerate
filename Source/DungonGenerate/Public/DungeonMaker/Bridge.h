@@ -19,9 +19,10 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Bridge Components")
 	UStaticMeshComponent* BridgeMesh;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Bridge Components")
-	float BridgeLength = 50.0f;
+	float BridgeLength = 10.0f;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Bridge Components")
-	float BridgeWidth = 15.f;
+	float BridgeWidth = 10.f;
+
 	
 	
 };

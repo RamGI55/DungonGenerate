@@ -9,7 +9,7 @@ AMasterRoom::AMasterRoom()
 {
 	Floormesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Floormesh"));
 	Floormesh->SetRelativeLocation(FVector(0, 0, 0.f));
-	Floormesh->SetRelativeScale3D(FVector(25.f, 25.f, 0.1f));
+	Floormesh->SetRelativeScale3D(FVector(25.f, 25.f, 0.5f));
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
 	CollisionBox->SetRelativeLocation(FVector(0, 0, 0.f));
@@ -78,18 +78,19 @@ void AMasterRoom::BeginPlay()
 
 bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction)
 {
-    const FVector Start = this->GetActorLocation();
+    const FVector Start = this->GetActorLocation()+Direction;
     const FVector End = Start + Direction;
     TArray<AActor*> ActorsIgnore;
     ActorsIgnore.Add(this);
-    FHitResult HitResult;
+    TArray<FHitResult> HitResult;
+	
 
-    const bool Hit = UKismetSystemLibrary::SphereTraceSingle(
+    const bool Hit = UKismetSystemLibrary::SphereTraceMulti(
         GetWorld(),
         Start,
         End,
         50.0f, // Trace radius
-        ETraceTypeQuery::TraceTypeQuery1,
+        UEngineTypes::ConvertToTraceType(ECC_EngineTraceChannel1),
         false,
         ActorsIgnore,
         EDrawDebugTrace::ForDuration,
@@ -97,16 +98,19 @@ bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction)
         true,
         FLinearColor::Blue,
         FLinearColor::Red,
-        5.0f // Duration of the debug line
+        5.0f// Duration of the debug line
     );
 
     if (Hit)
     {
-        AActor* HitActor = HitResult.GetActor();
-        if (HitActor && HitActor->IsA(AMasterRoom::StaticClass()))
-        {
-            return true; // Direction is duplicated
-        }
+    	for (const FHitResult& Result : HitResult)
+    	{
+    		AActor* HitActor = Result.GetActor(); 
+	        if (HitActor && HitActor->IsA(AMasterRoom::StaticClass()))
+	        {
+	            return true; // Direction is duplicated
+	        }
+    	}
     }
 
     return false; // Direction is not duplicated

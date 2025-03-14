@@ -20,7 +20,6 @@ ABridge::ABridge()
 		BridgeMesh->SetStaticMesh(BridgeMeshAsset.Object);
 	}
 	BridgeMesh->SetRelativeScale3D(FVector(BridgeLength, BridgeWidth, 0.5f));
-	
 
 }
 
