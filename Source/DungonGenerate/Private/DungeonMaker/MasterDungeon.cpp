@@ -40,6 +40,7 @@ void AMasterDungeon::SpawnDungeon()
 		}
 		AMasterRoom* PreviousMasterRoom = Cast<AMasterRoom>(PreviousRoom);
 
+		/*
 		if (PreviousMasterRoom->GetRandDirection() == FVector::ZeroVector)
 		{
 			// Should retry when it fail to make all dungeons 
@@ -53,6 +54,7 @@ void AMasterDungeon::SpawnDungeon()
 			DeleteDungeon();
 			break;
 		}
+		*/
 		
 		if (PreviousMasterRoom)
 		{
