@@ -16,13 +16,18 @@ UDungeonEventComponent::UDungeonEventComponent()
 	EventNames.Add(FString("Treasure"));
 	EventNames.Add(FString("Trap"));
 	EventNames.Add(FString("Shop"));
+	EventNames.Add(FString("Boss"));
+	EventNames.Add(FString("End"));
 }
 
-void UDungeonEventComponent::AddEvent(TArray<FString> EventName)
+void UDungeonEventComponent::GetEvent()
 {
-	int32 i = FMath::RandRange(0, EventName.Num() - 1);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *EventNames[i]);
-	// using Case. 
+	
+	int32 i = FMath::RandRange(0, EventNames.Num() - 1);
+	EventName = EventNames[i];
+	UE_LOG(LogTemp, Display, TEXT("EventName %s"), *EventName);
+	
+	// using Case.
 }
 
 

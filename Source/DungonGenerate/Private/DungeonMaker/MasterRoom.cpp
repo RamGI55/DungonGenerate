@@ -3,6 +3,8 @@
 
 #include "DungeonMaker/MasterRoom.h"
 
+#include "DungeonMaker/DungeonEventComponent.h"
+
 
 // Sets default values
 AMasterRoom::AMasterRoom()
@@ -37,6 +39,8 @@ AMasterRoom::AMasterRoom()
 	EastExit = CreateDefaultSubobject<UArrowComponent>(TEXT("EastExit"));
 	EastExit->SetRelativeLocation(FVector(3450.f, 0.f, 0.f));
 	EastExit->ArrowColor = FColor::Green;
+
+	EventComponent = CreateDefaultSubobject<UDungeonEventComponent>(TEXT("EventComponent"));
 	
 	DirectionArrows.Add(NorthExit);
 	DirectionArrows.Add(SouthExit);
@@ -73,7 +77,8 @@ FVector AMasterRoom::GetRandDirection()
 void AMasterRoom::BeginPlay()
 {
     Super::BeginPlay();
-    SphereTracing(); 
+    SphereTracing();
+	ActivateEvent(); 
 }
 
 bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction)
@@ -148,6 +153,11 @@ const bool AMasterRoom::SphereTracing()
         }
     }
     return false;
+}
+
+void AMasterRoom::ActivateEvent()
+{
+	EventComponent->GetEvent(); 
 }
 
 

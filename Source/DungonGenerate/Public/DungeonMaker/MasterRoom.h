@@ -27,7 +27,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsDirectionDuplicated(const FVector& Direction);
 	UFUNCTION(BlueprintCallable)
-	const bool SphereTracing(); 
+	const bool SphereTracing();
+	UFUNCTION(BlueprintCallable)
+	void ActivateEvent(); 
 protected:
 
 
@@ -65,7 +67,9 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Trace")
 	float Traceradius = 100.f;
 	UPROPERTY(VisibleAnywhere, Category = "Trace")
-	int32 HitCount; 
+	int32 HitCount;
+	UPROPERTY(VisibleAnywhere, Category = "Event")
+	class UDungeonEventComponent* EventComponent;
 	
 	// Direction Arrow Array for the random generating direction. 
 	UPROPERTY(EditAnywhere, Category = "Arrows")

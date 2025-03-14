@@ -16,12 +16,15 @@ public:
 	// Sets default values for this component's properties
 	UDungeonEventComponent();
 	UFUNCTION(BlueprintCallable)
-	void AddEvent(TArray<FString> EventName);
-
+	void GetEvent();
+	
 protected:
 	
-public:	
+public:
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	TArray<FString> EventNames;
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
+	FString EventName; 
 	
 	
 };
