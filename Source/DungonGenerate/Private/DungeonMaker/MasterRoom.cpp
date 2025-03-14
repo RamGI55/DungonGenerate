@@ -6,7 +6,7 @@
 
 // Sets default values
 AMasterRoom::AMasterRoom()
-{
+{	
 	Floormesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Floormesh"));
 	Floormesh->SetRelativeLocation(FVector(0, 0, 0.f));
 	Floormesh->SetRelativeScale3D(FVector(25.f, 25.f, 0.5f));
@@ -124,7 +124,7 @@ const bool AMasterRoom::SphereTracing()
 
     for (UArrowComponent* Arrow : DirectionArrows)
     {
-        const FVector Start = this->GetActorLocation();
+        const FVector Start = Arrow->GetComponentLocation();
         const FVector End = Arrow->GetComponentLocation();
         const bool Hit = UKismetSystemLibrary::SphereTraceSingle(
             GetWorld(),

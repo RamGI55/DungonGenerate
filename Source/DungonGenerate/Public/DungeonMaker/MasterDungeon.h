@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DungeonEventComponent.h"
 #include "MasterRoom.h"
 #include "GameFramework/Actor.h"
 #include "MasterDungeon.generated.h"
@@ -33,6 +34,5 @@ public:
 	TSubclassOf<class UObject> SpwnDungeon;
 	UPROPERTY(EditAnywhere, Category = "Dungeon")
 	int32 DungeonNumber;
-	
 	
 };
