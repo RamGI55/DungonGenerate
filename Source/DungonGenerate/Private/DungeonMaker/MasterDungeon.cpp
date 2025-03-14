@@ -42,10 +42,10 @@ void AMasterDungeon::SpawnDungeon()
 
 				// Calculate the midpoint between the previous room and the new room
 				FVector MidPoint = (PreviousRoom->GetActorLocation() + NewRoom->GetActorLocation()) / 2;
-
+	
 				// Spawn the bridge at the midpoint
 				GetWorld()->SpawnActor<ABridge>(MidPoint, Rot, SpawnParams);
-
+				UE_LOG(LogTemp, Display, TEXT("NewRoom %i"), i);
 				PreviousRoom = NewRoom;
 				
 			}

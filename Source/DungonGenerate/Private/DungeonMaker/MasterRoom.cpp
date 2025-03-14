@@ -69,7 +69,7 @@ FVector AMasterRoom::GetRandDirection()
 
     int32 i = FMath::RandRange(0, ValidDirections.Num() - 1);
 
-    UE_LOG(LogTemp, Display, TEXT("RandDirection %d"), i);
+    //UE_LOG(LogTemp, Display, TEXT("RandDirection %d"), i);
     RandDirection = ValidDirections[i];
     return RandDirection->GetComponentLocation();
 }
