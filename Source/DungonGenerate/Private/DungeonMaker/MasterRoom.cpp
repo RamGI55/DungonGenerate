@@ -47,6 +47,7 @@ AMasterRoom::AMasterRoom()
 	DirectionArrows.Add(SouthExit);
 	DirectionArrows.Add(WestExit);
 	DirectionArrows.Add(EastExit);
+	
 }
 
 FVector AMasterRoom::GetRandDirection()

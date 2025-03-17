@@ -23,7 +23,7 @@ void AMasterDungeon::SpawnDungeon()
 { 
 	FActorSpawnParameters SpawnParameters;
     FRotator Rot(0, 0, 0);
-    FVector Loc(0, 0, 0);
+    FVector Loc(0, 0, 0); 
 	
     SpnMasterDungeon = LoadObject<UBlueprint>(
     	nullptr, TEXT("/Script/Engine.Blueprint'/Game/DungeonMaker/BPMainRoom.BPMainRoom'"));
@@ -90,8 +90,7 @@ void AMasterDungeon::DeleteDungeon()
 		Actor->Destroy();
 	}
 	
-} 
-
+}
 
 // Called when the game starts or when spawned
 void AMasterDungeon::BeginPlay()

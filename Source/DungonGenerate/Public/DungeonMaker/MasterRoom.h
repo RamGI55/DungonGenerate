@@ -65,6 +65,11 @@ public:
 	UStaticMeshComponent* WestWall;
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* EastWall;
+
+	// Actor Spawn position
+	UPROPERTY (EditAnywhere)
+	UScene* NonPlayerSpawnPos;
+	
 	// Collision Sphere for overlap check
 	UPROPERTY(VisibleAnywhere, Category = "Trace")
 	float Traceradius = 100.f;
