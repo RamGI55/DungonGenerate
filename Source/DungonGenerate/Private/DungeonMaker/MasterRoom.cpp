@@ -47,7 +47,6 @@ AMasterRoom::AMasterRoom()
 	DirectionArrows.Add(SouthExit);
 	DirectionArrows.Add(WestExit);
 	DirectionArrows.Add(EastExit);
-	
 }
 
 FVector AMasterRoom::GetRandDirection()
@@ -79,7 +78,6 @@ void AMasterRoom::BeginPlay()
 {
     Super::BeginPlay();
     SphereTracing();
-	ActivateEvent(); 
 }
 
 bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction)

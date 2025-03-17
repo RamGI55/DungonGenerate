@@ -1,7 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+// dungeon array - first dungeon - always start with spawn/ shop
+// shop is appered in every 5 dungeon after.
+// boss room is appered in every 10 dungeon after.
+// end room is appered in the last dungeon. 
+
 #include "DungeonMaker/DungeonEventComponent.h"
+
+#include "DungeonMaker/MasterDungeon.h"
 
 
 // Sets default values for this component's properties
@@ -22,6 +29,10 @@ UDungeonEventComponent::UDungeonEventComponent()
 
 void UDungeonEventComponent::GetEvent()
 {
+	if (GetOwner()->GetName() == MasterDungeon->Dungeons[0]->GetName())
+	{
+		EventName = EventNames[4]; 
+	}
 	// Get a random event name
 	int Rnd = FMath::RandRange(0, 1000);
 	if (Rnd < 700)

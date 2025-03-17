@@ -79,4 +79,5 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UArrowComponent* RandDirection;
 	
+		
 };

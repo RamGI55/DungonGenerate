@@ -7,6 +7,8 @@
 #include "DungeonEventComponent.generated.h"
 
 
+class AMasterDungeon;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class DUNGONGENERATE_API UDungeonEventComponent : public UActorComponent
 {
@@ -21,6 +23,8 @@ public:
 protected:
 	
 public:
+	UPROPERTY(VisibleAnywhere)
+	AMasterDungeon* MasterDungeon;	
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	TArray<FString> EventNames;
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)

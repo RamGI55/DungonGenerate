@@ -40,6 +40,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Dungeon")
 	int32 DungeonNumber;
 	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
-	int32 GenerateCounter; 
+	int32 GenerateCounter;
+	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
+	TArray<AActor*> Dungeons;
 	
 };

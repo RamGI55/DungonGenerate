@@ -3,6 +3,7 @@
 
 #include "DungeonMaker/MasterDungeon.h"
 
+#include "AsyncTreeDifferences.h"
 #include "DungeonMaker/Bridge.h"
 #include "DungeonMaker/MasterRoom.h" 
 #include "Kismet/GameplayStatics.h"
@@ -29,7 +30,8 @@ void AMasterDungeon::SpawnDungeon()
     SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
     FActorSpawnParameters SpawnParams;
 	FirstDungeon = GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot, SpawnParameters);
-	
+	// Dungeon Array must be allocated before the first dungeon is spawned. 
+	Dungeons.Add(FirstDungeon);
 	AActor* PreviousRoom = FirstDungeon;
 	int MaxRetries = 10; 
 	for (int i = 1 ; i < DungeonNumber ; i++)
@@ -39,29 +41,11 @@ void AMasterDungeon::SpawnDungeon()
 			break;
 		}
 		AMasterRoom* PreviousMasterRoom = Cast<AMasterRoom>(PreviousRoom);
-
-		/*
-		if (PreviousMasterRoom->GetRandDirection() == FVector::ZeroVector)
-		{
-			// Should retry when it fail to make all dungeons 
-			GenerateCounter++;
-			if (GenerateCounter >= MaxRetries)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Cannot Generate the Dungeon"));
-				
-			}
-			UE_LOG(LogTemp, Warning, TEXT("New Dungeon Generation tries :%i"), GenerateCounter);
-			DeleteDungeon();
-			break;
-		}
-		*/
-		
 		if (PreviousMasterRoom)
 		{
 			FVector NextLoc = PreviousMasterRoom->GetRandDirection();
 			NextLoc += PreviousRoom->GetActorLocation();
 			AActor* NewRoom = GetWorld()->SpawnActor<AActor>(SpwnDungeon, NextLoc, Rot, SpawnParams);
-
 			// Calculate the midpoint between the previous room and the new room
 			FVector MidPoint = (PreviousRoom->GetActorLocation() + NewRoom->GetActorLocation()) / 2;
 
@@ -69,12 +53,29 @@ void AMasterDungeon::SpawnDungeon()
 			GetWorld()->SpawnActor<ABridge>(MidPoint, Rot, SpawnParams);
 			UE_LOG(LogTemp, Display, TEXT("NewRoom %i"), i);
 			PreviousRoom = NewRoom;
+
+			/*
+			if (PreviousMasterRoom->GetRandDirection() == FVector::ZeroVector)
+			{
+				// Should retry when it fail to make all dungeons 
+				
+				if (GenerateCounter >= MaxRetries)
+				{
+					UE_LOG(LogTemp, Warning, TEXT("Cannot Generate the Dungeon"));
+				
+				}
+				DeleteDungeon();
+				GenerateCounter++;
+				break;
+			}
+			*/
 		}
+		Dungeons.Add(PreviousRoom);
+		// MasterRoom->ActivateEvent();
 	}
-	
-	
 	UE_LOG(LogTemp, Display, TEXT("Dungeon Generated; Try : %i:)"), GenerateCounter);
-	GenerateCounter = 0; 
+	
+	
 }
 
 void AMasterDungeon::DeleteDungeon()
@@ -97,26 +98,6 @@ void AMasterDungeon::BeginPlay()
 {
 	Super::BeginPlay();
 	SpawnDungeon();
-	/*
-	for (int i = 0; i < DungeonNumber; i++)
-	{ 
-		if (FirstDungeon)
-		{	
-			AMasterRoom* FirstRoom = Cast<AMasterRoom>(FirstDungeon);
-			if (FirstRoom)
-			{
-				FRotator Rot(0, 0, 0);
-				FVector NextLoc = FirstRoom->GetRandDirection();
-				AActor* NewDungeon = GetWorld()->SpawnActor<AActor>(SpwnDungeon, NextLoc, Rot); // Must another TsubClass which has been newly generated. 
-				if (NewDungeon)
-				{
-					FirstDungeon = NewDungeon;
-				}
-			}
-		}
-		
-	}
-	*/
 }
 
 
