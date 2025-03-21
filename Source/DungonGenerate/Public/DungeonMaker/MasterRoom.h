@@ -1,5 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+// Version 2 Edition - 03. 21. 2025 2:00PM
+
 #pragma once
 
 #include "CoreMinimal.h"

@@ -1,5 +1,5 @@
 
-// This source code is for the portfoilo purpose.
+// NO LONGER USE IT (VER1)
 
 // ---------------------------------------------------- //
 // Project Name: Endless Spiral							//
