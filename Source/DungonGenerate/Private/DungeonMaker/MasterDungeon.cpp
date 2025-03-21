@@ -73,21 +73,6 @@ void AMasterDungeon::SpawnDungeon()
 	GenerateCounter = 0; 
 }
 
-void AMasterDungeon::DeleteDungeon()
-{
-	// must delete all of actors in the world. 
-	TArray<AActor*> ActorsToDelete;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMasterRoom::StaticClass(), ActorsToDelete);
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABridge::StaticClass(), ActorsToDelete);
-
-	for (AActor* Actor : ActorsToDelete)
-	{
-		Actor->Destroy();
-	}
-	
-} 
-
-
 // Called when the game starts or when spawned
 void AMasterDungeon::BeginPlay()
 {

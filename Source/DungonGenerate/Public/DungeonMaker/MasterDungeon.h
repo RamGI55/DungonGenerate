@@ -22,8 +22,6 @@ public:
 	void SpawnDungeon();
 	
 private:
-	UFUNCTION()
-	void DeleteDungeon(); 
 	
 protected:
 	// Called when the game starts or when spawned
