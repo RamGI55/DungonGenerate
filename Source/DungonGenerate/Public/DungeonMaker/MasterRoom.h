@@ -24,7 +24,11 @@ public:
 	AMasterRoom();
 	
 	UFUNCTION (BlueprintCallable)
-	FVector GetRandDirection(); 
+	FVector GetRandDirection();
+	UFUNCTION (BlueprintCallable)
+	TArray<FVector> GetRouteDirection();
+
+
 	virtual void BeginPlay() override;
 	UFUNCTION(BlueprintCallable)
 	bool IsDirectionDuplicated(const FVector& Direction);
@@ -33,6 +37,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ActivateEvent();
 	AMasterDungeon* DungeonGenerator;
+
+	
 
 	
 protected:

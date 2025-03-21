@@ -12,8 +12,8 @@
 AMasterRoom::AMasterRoom()
 {	
 	Floormesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Floormesh"));
-	Floormesh->SetRelativeLocation(FVector(0, 0, 0.f));
-	Floormesh->SetRelativeScale3D(FVector(25.f, 25.f, 0.5f));
+	//Floormesh->SetRelativeLocation(FVector(0, 0, 0.f));
+	//Floormesh->SetRelativeScale3D(FVector(25.f, 25.f, 0.5f));
 
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
 	CollisionBox->SetRelativeLocation(FVector(0, 0, 0.f));
@@ -49,6 +49,8 @@ AMasterRoom::AMasterRoom()
 	DirectionArrows.Add(WestExit);
 	DirectionArrows.Add(EastExit);
 	
+	SphereTracing();
+	
 }
 
 FVector AMasterRoom::GetRandDirection()
@@ -76,10 +78,27 @@ FVector AMasterRoom::GetRandDirection()
     return RandDirection->GetComponentLocation();
 }
 
+TArray<FVector> AMasterRoom::GetRouteDirection()
+{
+	TArray<FVector> Directions;
+	for (UArrowComponent* Arrow : DirectionArrows)
+	{
+		if (IsDirectionDuplicated(Arrow->GetComponentLocation()))
+		{
+			Directions.Add(Arrow->GetComponentLocation());
+		}
+		else
+		{
+			break;
+		}
+	}
+	return Directions;
+}
+
 void AMasterRoom::BeginPlay()
 {
     Super::BeginPlay();
-    //SphereTracing();
+   
 }
 
 bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction) // TArray<FVector> 
@@ -135,11 +154,11 @@ const bool AMasterRoom::SphereTracing()
             GetWorld(),
             Start,
             End,
-            50.0f, // Trace radius
+            250.f, // Trace radius
             ETraceTypeQuery::TraceTypeQuery1,
             false,
             ActorsIgnore,
-            EDrawDebugTrace::None,
+            EDrawDebugTrace::Persistent,
             HitResult,
             true,
             FLinearColor::Blue,
@@ -159,6 +178,7 @@ void AMasterRoom::ActivateEvent()
 {
 	EventComponent->GetEvent(); 
 }
+
 
 
 

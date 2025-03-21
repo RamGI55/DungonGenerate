@@ -56,19 +56,51 @@ void AMasterDungeon::SpawnDungeon()
 			AActor* NewRoom = GetWorld()->SpawnActor<AActor>(SpwnDungeon, NextLoc, Rot, SpawnParams);
 
 			RoomList.Add(NewRoom);
-
+			/*
 			FVector MidPoint = (CurrentRoom->GetActorLocation() + NewRoom->GetActorLocation()) / 2;
 			// Spawn the bridge at the midpoint
+
+			
 			GetWorld()->SpawnActor<ABridge>(MidPoint, Rot, SpawnParams);
 			UE_LOG(LogTemp, Display, TEXT("NewRoom %i"), i);
+			*/
 			CurrentRoom = NewRoom;
 			
 			
 			// Calculate the midpoint between the previous room and the new room
 		}
 	}
-	
-	
+	/*
+	for (int i = 1 ; i < DungeonNumber - 1 ;i++)
+	{
+		if (!RoomList.IsValidIndex(i))
+		{
+			UE_LOG(LogTemp, Error, TEXT("Invalid RoomList index: %d (Size: %d)"), i, RoomList.Num());
+			continue;
+		}
+		CurrentRoom = RoomList[i];
+		AMasterRoom* CurrentMasterRoom = Cast<AMasterRoom>(CurrentRoom);
+		TArray<FVector> RouteDirection;
+		if (CurrentMasterRoom->GetRouteDirection().Num() >= 1)
+		{
+			for (int j = 1; j < CurrentMasterRoom->GetRouteDirection().Num(); j++)
+			{
+				if (!CurrentMasterRoom) 
+				{
+					UE_LOG(LogTemp, Error, TEXT("CurrentMasterRoom is nullptr at index %d"), i);
+					continue;
+				}
+				FVector MidPoint = (CurrentRoom->GetActorLocation() + CurrentMasterRoom->GetRouteDirection()[i]/2);
+				RouteDirection.Add(MidPoint);
+				if (CurrentMasterRoom->GetRouteDirection().IsValidIndex(j))
+				{
+					GetWorld()->SpawnActor<ABridge>(MidPoint, Rot, SpawnParams);
+				}
+			}
+		}
+		
+	}
+	*/
 	UE_LOG(LogTemp, Display, TEXT("Dungeon Generated; Try : %i:)"), GenerateCounter);
 	GenerateCounter = 0; 
 }
@@ -80,8 +112,5 @@ void AMasterDungeon::BeginPlay()
 	SpawnDungeon();
 
 }
-
-
-
 
 

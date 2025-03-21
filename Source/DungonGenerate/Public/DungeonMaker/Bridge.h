@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/CapsuleComponent.h"
 #include "Bridge.generated.h"
+
 
 UCLASS()
 class DUNGONGENERATE_API ABridge : public AActor
@@ -22,7 +24,11 @@ public:
 	float BridgeLength = 10.0f;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Bridge Components")
 	float BridgeWidth = 10.f;
-
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Sockets")
+	UCapsuleComponent* Capsule1;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Sockets")
+	UCapsuleComponent* Capsule2;
+	
 	
 	
 };

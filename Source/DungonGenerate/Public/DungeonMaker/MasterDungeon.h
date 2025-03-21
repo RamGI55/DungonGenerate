@@ -46,4 +46,8 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
 	TArray<AActor*> Dungeons;
 	
+	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
+	TArray<FVector> RoadLocations;
+ 
+	
 };

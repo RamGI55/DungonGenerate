@@ -41,6 +41,7 @@ ADungeonGen::ADungeonGen()
 	iMaxRoomSize = 700;
 	iMazeSize = 25000;
 
+
 }
 
 void ADungeonGen::GetRandomRoom()
