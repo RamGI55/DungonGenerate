@@ -3,7 +3,6 @@
 
 #include "DungeonMaker/MasterDungeon.h"
 
-#include "AsyncTreeDifferences.h"
 #include "DungeonMaker/Bridge.h"
 #include "DungeonMaker/MasterRoom.h" 
 #include "Kismet/GameplayStatics.h"
@@ -23,59 +22,54 @@ void AMasterDungeon::SpawnDungeon()
 { 
 	FActorSpawnParameters SpawnParameters;
     FRotator Rot(0, 0, 0);
-    FVector Loc(0, 0, 0); 
+    FVector Loc(0, 0, 0);
 	
     SpnMasterDungeon = LoadObject<UBlueprint>(
     	nullptr, TEXT("/Script/Engine.Blueprint'/Game/DungeonMaker/BPMainRoom.BPMainRoom'"));
     SpwnDungeon = (UClass*)SpnMasterDungeon->GeneratedClass;
     FActorSpawnParameters SpawnParams;
 	FirstDungeon = GetWorld()->SpawnActor<AActor>(SpwnDungeon, Loc, Rot, SpawnParameters);
-	// Dungeon Array must be allocated before the first dungeon is spawned. 
-	Dungeons.Add(FirstDungeon);
-	AActor* PreviousRoom = FirstDungeon;
-	int MaxRetries = 10; 
+	
+
+	AActor* CurrentRoom = FirstDungeon;
+	
 	for (int i = 1 ; i < DungeonNumber ; i++)
 	{
-		if (!PreviousRoom)
+		if (!CurrentRoom)
 		{
 			break;
 		}
-		AMasterRoom* PreviousMasterRoom = Cast<AMasterRoom>(PreviousRoom);
-		if (PreviousMasterRoom)
+		
+		AMasterRoom* CurrentMasterRoom = Cast<AMasterRoom>(CurrentRoom);
+		if (CurrentMasterRoom)
 		{
-			FVector NextLoc = PreviousMasterRoom->GetRandDirection();
-			NextLoc += PreviousRoom->GetActorLocation();
+			// back to the previous room if the has now direction to go. 
+			for (int j = i - 2; CurrentMasterRoom->GetRandDirection() == FVector::ZeroVector && j >= 0; --j)
+			{
+				CurrentRoom = RoomList[j];
+				CurrentMasterRoom = Cast<AMasterRoom>(CurrentRoom);
+			}
+			
+			FVector NextLoc = CurrentMasterRoom->GetRandDirection();
+			NextLoc += CurrentRoom->GetActorLocation();
 			AActor* NewRoom = GetWorld()->SpawnActor<AActor>(SpwnDungeon, NextLoc, Rot, SpawnParams);
-			// Calculate the midpoint between the previous room and the new room
-			FVector MidPoint = (PreviousRoom->GetActorLocation() + NewRoom->GetActorLocation()) / 2;
 
+			RoomList.Add(NewRoom);
+
+			FVector MidPoint = (CurrentRoom->GetActorLocation() + NewRoom->GetActorLocation()) / 2;
 			// Spawn the bridge at the midpoint
 			GetWorld()->SpawnActor<ABridge>(MidPoint, Rot, SpawnParams);
 			UE_LOG(LogTemp, Display, TEXT("NewRoom %i"), i);
-			PreviousRoom = NewRoom;
-
-			/*
-			if (PreviousMasterRoom->GetRandDirection() == FVector::ZeroVector)
-			{
-				// Should retry when it fail to make all dungeons 
-				
-				if (GenerateCounter >= MaxRetries)
-				{
-					UE_LOG(LogTemp, Warning, TEXT("Cannot Generate the Dungeon"));
-				
-				}
-				DeleteDungeon();
-				GenerateCounter++;
-				break;
-			}
-			*/
+			CurrentRoom = NewRoom;
+			
+			
+			// Calculate the midpoint between the previous room and the new room
 		}
-		Dungeons.Add(PreviousRoom);
-		// MasterRoom->ActivateEvent();
 	}
+	
+	
 	UE_LOG(LogTemp, Display, TEXT("Dungeon Generated; Try : %i:)"), GenerateCounter);
-	
-	
+	GenerateCounter = 0; 
 }
 
 void AMasterDungeon::DeleteDungeon()
@@ -90,13 +84,15 @@ void AMasterDungeon::DeleteDungeon()
 		Actor->Destroy();
 	}
 	
-}
+} 
+
 
 // Called when the game starts or when spawned
 void AMasterDungeon::BeginPlay()
 {
 	Super::BeginPlay();
 	SpawnDungeon();
+
 }
 
 

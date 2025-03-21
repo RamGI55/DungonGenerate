@@ -78,12 +78,12 @@ FVector AMasterRoom::GetRandDirection()
 void AMasterRoom::BeginPlay()
 {
     Super::BeginPlay();
-    SphereTracing();
+    //SphereTracing();
 }
 
-bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction)
+bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction) // TArray<FVector> 
 {
-    const FVector Start = this->GetActorLocation()+Direction;
+    const FVector Start = GetActorLocation()+Direction;
     const FVector End = Start + Direction;
     TArray<AActor*> ActorsIgnore;
     ActorsIgnore.Add(this);
@@ -101,7 +101,7 @@ bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction)
         EDrawDebugTrace::Persistent,
         HitResult,
         true,
-        FLinearColor::Blue,
+        FLinearColor::Yellow,
         FLinearColor::Red,
         5.0f// Duration of the debug line
     );
@@ -117,7 +117,6 @@ bool AMasterRoom::IsDirectionDuplicated(const FVector& Direction)
 	        }
     	}
     }
-
     return false; // Direction is not duplicated
 }
 

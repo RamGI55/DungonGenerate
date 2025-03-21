@@ -38,7 +38,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
 	TSubclassOf<class UObject> SpwnDungeon;
 	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
-	TArray<UObject*> RoomList;  
+	TArray<AActor*> RoomList;  
 	UPROPERTY(EditAnywhere, Category = "Dungeon")
 	int32 DungeonNumber;
 	UPROPERTY(VisibleAnywhere, Category = "Dungeon")
