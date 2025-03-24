@@ -12,6 +12,7 @@
 #include "MasterRoom.generated.h"
 
 
+class USphereComponent;
 class AMasterDungeon;
 
 UCLASS()
@@ -36,34 +37,35 @@ public:
 	const bool SphereTracing();
 	UFUNCTION(BlueprintCallable)
 	void ActivateEvent();
-	AMasterDungeon* DungeonGenerator;
 
-	
 
-	
 protected:
+	UFUNCTION()
+	bool CollisionDetected(); // must return the value. 
+	UFUNCTION(BlueprintCallable)
+	void ClearBridge(); 
 	
 public:	
 	// Static Mashes
 	UPROPERTY(VisibleAnywhere,Category="SpawnBP")
 	TSubclassOf<class UObject> SpwnDungeon;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* Floormesh;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* CollisionBox;
 	// Master Direction Arrow indicates the North. 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	UArrowComponent* NorthArrow;
 	// Direction Arrows 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	UArrowComponent* NorthExit;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	UArrowComponent* SouthExit;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	UArrowComponent* WestExit;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere )
 	UArrowComponent* EastExit;
-	
+	 
 	// Walls
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* NorthWall;
@@ -91,6 +93,19 @@ public:
 	TArray<UArrowComponent*> DirectionArrows;
 	UPROPERTY(VisibleAnywhere)
 	UArrowComponent* RandDirection;
-	
+	UPROPERTY()
+	AMasterDungeon* DungeonGenerator;
+
+	// Direction Collision Array
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* NorthCollision;
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* SouthCollision;
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* WestCollision;
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* EastCollision; 
+	UPROPERTY(VisibleAnywhere)
+	TArray<USphereComponent*> DirectionCollisions; 
 		
 };

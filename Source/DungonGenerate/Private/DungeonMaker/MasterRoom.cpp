@@ -4,6 +4,7 @@
 
 #include "DungeonMaker/MasterRoom.h"
 
+#include "Components/SphereComponent.h"
 #include "DungeonMaker/DungeonEventComponent.h"
 #include "DungeonMaker/MasterDungeon.h"
 
@@ -48,6 +49,16 @@ AMasterRoom::AMasterRoom()
 	DirectionArrows.Add(SouthExit);
 	DirectionArrows.Add(WestExit);
 	DirectionArrows.Add(EastExit);
+
+	NorthCollision = CreateDefaultSubobject<USphereComponent>(TEXT("NorthCollision"));
+	SouthCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SouthCollision"));
+	WestCollision = CreateDefaultSubobject<USphereComponent>(TEXT("WestCollision"));
+	EastCollision = CreateDefaultSubobject<USphereComponent>(TEXT("EastCollision"));
+
+	DirectionCollisions.Add(NorthCollision);
+	DirectionCollisions.Add(SouthCollision);
+	DirectionCollisions.Add(WestCollision);
+	DirectionCollisions.Add(EastCollision);
 	
 	SphereTracing();
 	
@@ -178,6 +189,49 @@ void AMasterRoom::ActivateEvent()
 {
 	EventComponent->GetEvent(); 
 }
+
+bool AMasterRoom::CollisionDetected()
+{
+	for (USphereComponent* Sphere : DirectionCollisions)
+	{
+		TArray<AActor*> ActorsIgnore;
+		ActorsIgnore.Add(this);
+		FHitResult HitResult;
+		const bool Hit = UKismetSystemLibrary::SphereTraceSingle(
+			GetWorld(),
+			Sphere->GetComponentLocation(),
+			Sphere->GetComponentLocation(),
+			250.f, // Trace radius
+			ETraceTypeQuery::TraceTypeQuery1,
+			false,
+			ActorsIgnore,
+			EDrawDebugTrace::Persistent,
+			HitResult,
+			true,
+			FLinearColor::Blue,
+			FLinearColor::Red,
+			5.0f // Duration of the debug line
+		);
+
+		if (Hit)
+		{
+			return true;
+		}
+	}
+	return false;
+	
+}
+
+void AMasterRoom::ClearBridge()
+{
+	if (!CollisionDetected())
+	{
+		// Clear the bridge mesh if the collision isn't detected.
+	}
+	
+}
+
+
 
 
 
