@@ -50,10 +50,27 @@ AMasterRoom::AMasterRoom()
 	DirectionArrows.Add(WestExit);
 	DirectionArrows.Add(EastExit);
 
+	// Bridge
+	NorthBridge = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("NorthBridge"));
+	NorthBridge->SetupAttachment(Floormesh);
+	
+	SouthBridge = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SouthBridge"));
+	SouthBridge->SetupAttachment(Floormesh);
+	WestBridge = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WestBridge"));
+	WestBridge->SetupAttachment(Floormesh);
+	EastBridge = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("EastBridge"));
+	EastBridge->SetupAttachment(Floormesh);
+	
+
+	// Collision to check the bridge direction
 	NorthCollision = CreateDefaultSubobject<USphereComponent>(TEXT("NorthCollision"));
+	NorthCollision->SetupAttachment(NorthBridge);
 	SouthCollision = CreateDefaultSubobject<USphereComponent>(TEXT("SouthCollision"));
+	SouthCollision->SetupAttachment(SouthBridge);
 	WestCollision = CreateDefaultSubobject<USphereComponent>(TEXT("WestCollision"));
+	WestCollision->SetupAttachment(WestBridge);
 	EastCollision = CreateDefaultSubobject<USphereComponent>(TEXT("EastCollision"));
+	EastCollision->SetupAttachment(EastBridge);
 
 	DirectionCollisions.Add(NorthCollision);
 	DirectionCollisions.Add(SouthCollision);
@@ -224,10 +241,7 @@ bool AMasterRoom::CollisionDetected()
 
 void AMasterRoom::ClearBridge()
 {
-	if (!CollisionDetected())
-	{
-		// Clear the bridge mesh if the collision isn't detected.
-	}
+	
 	
 }
 

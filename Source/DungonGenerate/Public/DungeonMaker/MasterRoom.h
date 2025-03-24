@@ -96,6 +96,17 @@ public:
 	UPROPERTY()
 	AMasterDungeon* DungeonGenerator;
 
+	// Bridge Array
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* NorthBridge;
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* SouthBridge;
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* WestBridge;
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* EastBridge;
+	
+	
 	// Direction Collision Array
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* NorthCollision;
