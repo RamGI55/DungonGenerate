@@ -41,7 +41,7 @@ public:
 
 protected:
 	UFUNCTION()
-	bool CollisionDetected(); // must return the value. 
+	bool CollisionDetected(USphereComponent* CollisionComponent); // must return the value. 
 	UFUNCTION(BlueprintCallable)
 	void ClearBridge(); 
 	

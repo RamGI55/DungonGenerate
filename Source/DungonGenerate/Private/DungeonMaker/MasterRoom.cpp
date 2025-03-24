@@ -126,6 +126,7 @@ TArray<FVector> AMasterRoom::GetRouteDirection()
 void AMasterRoom::BeginPlay()
 {
     Super::BeginPlay();
+	// ClearBridge(); 
    
 }
 
@@ -207,7 +208,7 @@ void AMasterRoom::ActivateEvent()
 	EventComponent->GetEvent(); 
 }
 
-bool AMasterRoom::CollisionDetected()
+bool AMasterRoom::CollisionDetected(USphereComponent* CollisionComponent)
 {
 	for (USphereComponent* Sphere : DirectionCollisions)
 	{
@@ -230,7 +231,7 @@ bool AMasterRoom::CollisionDetected()
 			5.0f // Duration of the debug line
 		);
 
-		if (Hit)
+		if (Hit && HitResult.GetActor() && HitResult.GetActor()->IsA(AMasterRoom::StaticClass()))
 		{
 			return true;
 		}
@@ -241,7 +242,22 @@ bool AMasterRoom::CollisionDetected()
 
 void AMasterRoom::ClearBridge()
 {
-	
+	if (!CollisionDetected(NorthCollision))
+	{
+		NorthBridge->DestroyComponent();
+	}
+	if (!CollisionDetected(SouthCollision))
+	{
+		SouthBridge->DestroyComponent();
+	}
+	if (!CollisionDetected(WestCollision))
+	{
+		WestBridge->DestroyComponent();
+	}
+	if (!CollisionDetected(EastCollision))
+	{
+		EastBridge->DestroyComponent();
+	}
 	
 }
 
