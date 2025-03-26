@@ -118,5 +118,17 @@ public:
 	USphereComponent* EastCollision; 
 	UPROPERTY(VisibleAnywhere)
 	TArray<USphereComponent*> DirectionCollisions; 
-		
+
+	// Collision for the Event (Open the Gate)
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* NorthEventCollision;
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* SouthEventCollision;
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* WestEventCollision;
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* EastEventCollision;
+	TArray<UBoxComponent*> EventCollisions;
+	
+	
 };

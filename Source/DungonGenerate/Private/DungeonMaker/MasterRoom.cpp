@@ -77,6 +77,20 @@ AMasterRoom::AMasterRoom()
 	DirectionCollisions.Add(WestCollision);
 	DirectionCollisions.Add(EastCollision);
 	
+	NorthEventCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("NorthEvent"));
+	NorthEventCollision->SetupAttachment(Floormesh);
+	SouthEventCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("SouthEvent"));
+	SouthEventCollision->SetupAttachment(Floormesh);
+	WestEventCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("WestEvent"));
+	WestEventCollision->SetupAttachment(Floormesh);
+	EastEventCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("EastEvent"));
+	EastEventCollision->SetupAttachment(Floormesh);
+	
+	EventCollisions.Add(NorthEventCollision);
+	EventCollisions.Add(SouthEventCollision);
+	EventCollisions.Add(WestEventCollision);
+	EventCollisions.Add(EastEventCollision);
+	
 	SphereTracing();
 	
 }
