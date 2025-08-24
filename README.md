@@ -1,8 +1,7 @@
 # Procedual Dungeon Generator in Unreal Engine
 
 This is the procedual dungeon generator in Unreal Engine 5.5 generate the square shape of the dungon with the simple configuration and one click settings! 
-
-
+Utilising a `Greedy Algorithm Approach` to create the diverse, square-shaped dungeon layouts with optimal room placement and connectivity. Thi system is designed for ARPG layout which needes for the unlimited playablity to the player. 
 
 ### Instructions 
 1. Download the soruce code or clone the git repository.
