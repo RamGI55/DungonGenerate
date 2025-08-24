@@ -25,7 +25,9 @@ Utilising a `Greedy Algorithm Approach` to create the diverse, square-shaped dun
 <img width="1868" height="1097" alt="realgameplay" src="https://github.com/user-attachments/assets/f2b24d67-daca-48e1-afe4-a1f804760338" />
 
 ##### Usecase of the Dungeon Generator 
-[![Video Title](https://img.youtube.com/vi/VIDEO_ID/0.jpg)]((https://www.youtube.com/watch?v=xwpHRolSSrI))
+[![Watch the Dungeon Generator in Action](https://img.youtube.com/vi/xwpHRolSSrI/0.jpg)](https://www.youtube.com/watch?v=xwpHRolSSrI)
+
+*Click the image above to watch the dungeon generator demo*
 
 ### Current Features 
 - Configurable/adjustable Dungeon Settings in the Actor.
