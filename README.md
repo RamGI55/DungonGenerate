@@ -34,6 +34,7 @@ Utilising a `Greedy Algorithm Approach` to create the diverse, square-shaped dun
 - Sample Dungeon block. 
 
 ### Known Problems/Bugs 
+- GC may run when you generate +5k dungeons and possibly cause the bottlenecks in UE garbarge collector. 
 
 ### Requirements
 - Unreal Engine above 5.4.4. or Higher. 
